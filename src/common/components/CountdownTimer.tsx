@@ -1,19 +1,18 @@
-import {Typography} from '@mui/material';
-import React, {useEffect} from 'react';
-import {useSelector} from 'react-redux';
+import { Typography } from '@mui/material';
+import React, { memo, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
-
-import {useActions} from '../hooks/useActions';
-import {quizActions} from "../../modules/quiz/quiz.slice.ts";
-import {selectRestTime} from "../../modules/quiz/quiz.selector.ts";
-import {formatTime} from "../utils/formatTime.ts";
+import { useActions } from '../hooks/useActions';
+import { quizActions } from '../../modules/quiz/quiz.slice.ts';
+import { selectRestTime } from '../../modules/quiz/quiz.selector.ts';
+import { formatTime } from '../utils/formatTime.ts';
 
 type CountdownTimerProps = {
   stopTimer: boolean;
 };
 
-const CountdownTimer: React.FC<CountdownTimerProps> = ({stopTimer}) => {
-  const {setRestTime} = useActions(quizActions);
+const CountdownTimer: React.FC<CountdownTimerProps> = memo(({ stopTimer }) => {
+  const { setRestTime } = useActions(quizActions);
 
   const seconds = useSelector(selectRestTime);
 
@@ -30,6 +29,6 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({stopTimer}) => {
   }, [seconds, stopTimer]);
 
   return <Typography variant={'h6'}>Остаток времени: {formatTime(seconds)}</Typography>;
-};
+});
 
 export default CountdownTimer;
